@@ -203,7 +203,7 @@ for (const story of stories) {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(storyUrl(story.id));
-    await expect(page.locator('#storybook-root .vse-auth').first()).toBeVisible();
+    await expect(page.locator('#storybook-root :is(.vse-auth, .vse-app)').first()).toBeVisible();
     await expect(page.locator('.sb-errordisplay')).toBeHidden();
     await injectAxe(page);
     const violations = await page.evaluate(async () => (await __vseTestAxe.run(document.querySelector('#storybook-root'), { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } })).violations.map(({ id, nodes }) => ({ id, targets: nodes.map(node => node.target) })));

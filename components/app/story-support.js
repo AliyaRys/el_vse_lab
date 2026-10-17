@@ -1,0 +1,14 @@
+import './Icon.js';
+import './Button.js';
+import './InfoField.js';
+import './Toast.js';
+import './app.css';
+
+export const app = globalThis.VseApp;
+export const wrapApp = (element, className = 'app-preview') => {
+  const wrapper = document.createElement('div');
+  wrapper.className = `vse-app ${className}`;
+  wrapper.append(element);
+  return wrapper;
+};
+export const delay = (duration = 600) => new Promise(resolve => setTimeout(resolve, duration));

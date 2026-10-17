@@ -1,14 +1,14 @@
 {
   "profile": "product-admin",
-  "scope": "Первый этап миграции: общие компоненты login. Старые экраны не объявлены проверенными.",
-  "sourceRoots": ["components/auth"],
+  "scope": "Мигрированные вертикальные срезы: авторизация, восстановление пароля и профиль. Остальные старые экраны не объявлены проверенными.",
+  "sourceRoots": ["components/auth", "components/app", "components/profile"],
   "locale": "ru-RU",
   "canonicalMap": "UX-CONTRACT.md",
-  "requiredCapabilities": ["Form"],
+  "requiredCapabilities": ["Form", "Toast"],
   "requiredCommands": ["build", "e2e"],
   "commands": {
     "build": "npm.cmd run build-storybook",
     "e2e": "npm.cmd run test:ui"
   },
-  "evidence": { "failurePaths": "tests/auth.spec.js" }
+  "evidence": { "failurePaths": "tests/profile.spec.js" }
 }
