@@ -6,6 +6,8 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const loginUrl = pathToFileURL(resolve('login.html')).href;
+const recoveryUrl = pathToFileURL(resolve('password-recovery.html')).href;
+const recoverySentUrl = pathToFileURL(resolve('password-recovery-sent.html')).href;
 const storyUrl = id => `http://127.0.0.1:6007/iframe.html?id=${id}&viewMode=story`;
 const screenshotDir = resolve('test-results');
 const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -47,6 +49,58 @@ test('Макет: ссылка восстановления сохраняет �
   await page.goto(loginUrl);
   await page.getByRole('link', { name: 'Забыли пароль?' }).click();
   await expect(page).toHaveURL(/\/password-recovery\.html$/);
+});
+
+test('Восстановление: проверка email, ожидание и подтверждение', async ({ page }) => {
+  await page.goto(recoveryUrl);
+  const email = page.getByLabel('Электронная почта', { exact: true });
+  const submit = page.locator('button[type="submit"]');
+  await expect(email).toHaveAttribute('type', 'email');
+  await expect(email).toHaveAttribute('autocomplete', 'email');
+  await expect(email).toHaveAttribute('inputmode', 'email');
+  await submit.click();
+  await expect(email).toBeFocused();
+  await expect(email).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByText('Укажите электронную почту.', { exact: true })).toBeVisible();
+  await email.fill('wrong-address');
+  await submit.click();
+  await expect(page.getByText('Проверьте адрес электронной почты.', { exact: true })).toBeVisible();
+  await email.fill('anna@example.ru');
+  await submit.click();
+  await expect(submit).toBeDisabled();
+  await expect(submit).toHaveAttribute('aria-busy', 'true');
+  await expect(page).toHaveURL(/\/password-recovery-sent\.html$/);
+  await expect(page.getByRole('status')).toContainText('с адресом «anna@example.ru»');
+});
+
+test('Восстановление: прямое подтверждение не раскрывает адрес, возврат очищает временные данные', async ({ page }) => {
+  await page.goto(recoverySentUrl);
+  const notice = page.getByRole('status');
+  await expect(notice).toContainText('Если учётная запись существует');
+  await expect(notice).not.toContainText('@');
+  await page.evaluate(() => sessionStorage.setItem('vse-password-recovery-email', 'temporary@example.ru'));
+  await page.getByRole('link', { name: 'Вернуться ко входу' }).click();
+  await expect(page).toHaveURL(/\/login\.html$/);
+  expect(await page.evaluate(() => sessionStorage.getItem('vse-password-recovery-email'))).toBeNull();
+});
+
+test('Восстановление: составная форма блокирует повторную отправку', async ({ page }) => {
+  await page.goto(storyUrl('auth-recovery-form--default'));
+  await expect(page.getByRole('form', { name: 'Форма восстановления пароля' })).toBeVisible();
+  const result = await page.evaluate(async () => {
+    let calls = 0;
+    let complete;
+    const form = globalThis.VseAuth.createRecoveryForm({ onSubmit: () => { calls++; return new Promise(resolve => { complete = resolve; }); } });
+    document.body.append(form);
+    form.field.input.value = 'anna@example.ru';
+    form.requestSubmit();
+    form.requestSubmit();
+    const busy = form.submitButton.disabled;
+    complete();
+    await Promise.resolve();
+    return { calls, busy, type: form.field.input.type, autocomplete: form.field.input.autocomplete };
+  });
+  expect(result).toEqual({ calls: 1, busy: true, type: 'email', autocomplete: 'email' });
 });
 
 test('Форма: ожидание, повторная отправка и демонстрационный результат', async ({ page }) => {
@@ -127,6 +181,21 @@ test('Каталог: узкий viewport и документация компо
   expect(new Set(ids).size).toBe(ids.length);
   await page.screenshot({ path: resolve(screenshotDir, 'storybook-field-docs.png'), fullPage: true });
 });
+
+for (const [file, url] of [['password-recovery', recoveryUrl], ['password-recovery-sent', recoverySentUrl]]) {
+  for (const [name, width, height] of [['desktop', 1440, 1000], ['mobile', 390, 844]]) {
+    test(`${file}: ${name}, геометрия и доступность`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto(url);
+      await expect(page.getByRole('heading', { name: 'Восстановление пароля' })).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+      await injectAxe(page);
+      const violations = await page.evaluate(async () => (await __vseTestAxe.run(document.querySelector('main'), { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } })).violations.map(({ id, nodes }) => ({ id, targets: nodes.map(node => node.target) })));
+      expect(violations).toEqual([]);
+      await page.screenshot({ path: resolve(screenshotDir, `${file}-${name}.png`), fullPage: true, animations: 'disabled' });
+    });
+  }
+}
 
 const stories = Object.values(JSON.parse(readFileSync(resolve('storybook-static/index.json'), 'utf8')).entries).filter(entry => entry.type === 'story');
 for (const story of stories) {

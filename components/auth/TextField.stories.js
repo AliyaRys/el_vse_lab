@@ -19,6 +19,7 @@ export default {
 export const Empty = { name: 'Пустое поле' };
 export const Filled = { name: 'Заполненное поле', args: { value: 'Kuznetsova.Anna@tatar.ru' } };
 export const Password = { name: 'Пароль', args: { label: 'Пароль', type: 'password', placeholder: 'Введите пароль', value: 'demo-password' }, argTypes: { value: { control: false, table: { disable: true } } } };
+export const Email = { name: 'Электронная почта', args: { label: 'Электронная почта', type: 'email', placeholder: 'name@example.ru' } };
 export const Error = { name: 'Ошибка', args: { error: 'Введите логин' } };
 export const Disabled = { name: 'Недоступное поле', args: { disabled: true } };
 export const Hint = { name: 'С пояснением', args: { hint: 'Используйте логин, выданный администратором.' } };

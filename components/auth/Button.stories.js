@@ -15,6 +15,8 @@ export default {
 };
 export const Default = { name: 'Обычная' };
 export const WithoutIcon = { name: 'Без иконки', args: { icon: false } };
+export const Recovery = { name: 'Восстановить пароль', args: { label: 'Восстановить пароль', busyLabel: 'Отправляем…', icon: false } };
+export const RecoveryLoading = { name: 'Письмо отправляется', args: { label: 'Восстановить пароль', busyLabel: 'Отправляем…', icon: false, busy: true } };
 export const Disabled = { name: 'Недоступная', args: { disabled: true } };
 export const Loading = { name: 'Загрузка', args: { busy: true } };
 export const LongLabel = { name: 'Длинная подпись', args: { label: 'Войти в электронную лабораторию ветеринарно-санитарной экспертизы' } };

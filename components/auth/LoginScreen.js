@@ -3,14 +3,7 @@
 
   /** Полный экран исходного login; зависимости и стили общие со Storybook. */
   ui.createLoginScreen = ({ logoSrc = 'vse-lab-icon-transparent.png', ...formOptions } = {}) => {
-    const main = document.createElement('main');
-    main.className = 'vse-auth vse-auth-page';
-    for (const placement of ['one', 'two', 'three']) {
-      const orb = document.createElement('span');
-      orb.className = `auth-orb ${placement}`;
-      orb.setAttribute('aria-hidden', 'true');
-      main.append(orb);
-    }
+    const main = ui.createAuthPage();
     const shell = document.createElement('section');
     shell.className = 'auth-shell';
     shell.setAttribute('aria-label', 'Экран входа');

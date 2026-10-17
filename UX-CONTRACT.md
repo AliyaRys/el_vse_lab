@@ -2,11 +2,12 @@
 
 ## Общие компоненты входа — первый этап библиотеки
 
-`login.html` и раздел «Вход» в Storybook используют один код из `components/auth/`. Страница подключает обычные скрипты для открытия с диска; stories импортируют те же файлы. Порядок компонентов: поле с вариантом пароля, кнопка login, ссылка восстановления, форма, полный экран. Соседний сценарий восстановления пароля пока не мигрирован.
+`login.html`, `password-recovery.html`, `password-recovery-sent.html` и раздел «Вход» в Storybook используют один код из `components/auth/`. Страницы подключают обычные скрипты для открытия с диска; stories импортируют те же файлы. Поле, кнопка, ссылка и фон повторно используются в формах входа и восстановления, а составные формы и экраны отвечают только за свой сценарий.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 | --- | --- | --- | --- | --- |
 | Form | `components/auth/LoginForm.js` и `TextField.js` | Этот контракт и `components/auth/README.md` | login, password, disabled, busy, field error, form error | `tests/auth.spec.js`, Storybook |
+| Password recovery | `components/auth/RecoveryForm.js` и `RecoveryScreen.js` | Этот контракт и `components/auth/README.md` | form, sent, email, busy, disabled, field error | `tests/auth.spec.js`, Storybook |
 
 Вход остаётся демонстрационным: при заполненных обязательных полях страница переходит на `journal.html`. Компоненты не проверяют учётные записи и не сохраняют пароль. Пустые значения теперь показывают ошибки у полей с фокусом на первом из них, без системных всплывающих окон; для логина не требуется формат email. Ошибка снимается при исправлении ввода. Асинхронный обработчик блокирует повторную отправку; при отказе ввод сохраняется и действие можно повторить. Логин, пароль и ошибки не сериализуются в URL. Ссылка восстановления сохраняет адрес `password-recovery.html`.
 

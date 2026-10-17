@@ -18,7 +18,12 @@
     input.placeholder = placeholder;
     input.required = required;
     input.disabled = disabled;
-    input.autocomplete = autocomplete || (type === 'password' ? 'current-password' : 'username');
+    input.autocomplete = autocomplete || ({ password: 'current-password', email: 'email' }[type] || 'username');
+    if (type === 'email') {
+      input.inputMode = 'email';
+      input.autocapitalize = 'none';
+      input.spellcheck = false;
+    }
     caption.htmlFor = input.id;
     caption.textContent = label;
     heading.append(caption);
