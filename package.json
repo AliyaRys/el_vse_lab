@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "storybook": "storybook dev -p 6006 --host 127.0.0.1",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:ui": "playwright test"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,11 @@
   },
   "homepage": "https://github.com/AliyaRys/el_vse_lab#readme",
   "devDependencies": {
-    "storybook": "^10.6.2",
-    "@storybook/html-vite": "^10.6.2",
+    "@playwright/test": "^1.58.2",
     "@storybook/addon-a11y": "^10.6.2",
-    "@storybook/addon-docs": "^10.6.2"
+    "@storybook/addon-docs": "^10.6.2",
+    "@storybook/html-vite": "^10.6.2",
+    "axe-core": "^4.14.0",
+    "storybook": "^10.6.2"
   }
 }
