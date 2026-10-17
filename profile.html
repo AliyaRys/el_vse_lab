@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Электронная лаборатория ВСЭ — Профиль пользователя</title>
+  <style>
+    :root { --ink:#17323a; --muted:#668087; --line:#dfe9e9; --page:#f5f9f8; --panel:#fff; --teal:#146c73; --teal-dark:#0d5358; --tint:#eaf6f4; --danger:#a33943; }
+    *{box-sizing:border-box} body{margin:0;background:var(--page);color:var(--ink);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input{font:inherit} button{cursor:pointer} button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #75bfc2;outline-offset:2px}
+    .topbar{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 max(24px,calc((100vw - 1440px)/2));gap:26px;position:sticky;top:0;z-index:10}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);min-width:275px}.brand strong{display:block;font-size:15px;letter-spacing:-.01em}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+    .topnav{display:flex;align-items:center;gap:6px;flex:1}.navlink,.user-link{border:0;background:transparent;color:#4c6870;min-height:42px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:9px;padding:0 12px;font-weight:600}.navlink:hover,.user-link:hover,.user-link.active{background:var(--tint);color:var(--teal-dark)}.navlink{border:1px solid var(--line);background:#fff}.user-link.active{box-shadow:inset 0 0 0 1px #c9e6e2}.icon{width:19px;height:19px;display:inline-grid;place-items:center;font-size:18px;line-height:1}.user-area{display:flex;align-items:center;gap:5px}.avatar{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#d7efec;color:var(--teal-dark);font-weight:750;font-size:12px}.logout{border:1px solid var(--line);background:white;color:#587077;border-radius:9px;min-height:38px;padding:0 12px;font-weight:650}.logout:hover{border-color:#e7b7bc;color:var(--danger);background:#fff8f8}
+    .nav-item{position:relative;width:340px}.nav-item>.navlink{width:100%;justify-content:flex-start}.nav-item .navtext{margin-right:auto}.nav-item:hover>.navlink,.nav-item:focus-within>.navlink{background:var(--tint);color:var(--teal-dark)}.nav-caret{width:14px;height:14px;margin-left:auto;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}.journal-menu{position:absolute;left:0;top:calc(100% - 1px);z-index:30;display:none;width:100%;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 18px 42px #17323a22}.nav-item:hover .journal-menu,.nav-item:focus-within .journal-menu,.nav-item.open .journal-menu{display:grid}.journal-menu a{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:38px;border-radius:10px;padding:0 10px;text-decoration:none;color:#4d676d;font-weight:620;line-height:1.2}.journal-menu a:hover{background:#f5f9f8;color:var(--teal-dark)}.journal-menu a.active{background:var(--tint);color:var(--teal-dark);font-weight:720;box-shadow:inset 0 0 0 1px #c9e6e2}.journal-menu a.active::after{content:"✓";font-weight:900;color:var(--teal)}
+    main{max-width:1180px;margin:0 auto;padding:37px 24px 96px}.breadcrumbs{color:var(--muted);font-size:13px;margin-bottom:20px}.breadcrumbs a{color:var(--teal);text-decoration:none}.title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}.title-row h1{font-size:30px;line-height:1.15;letter-spacing:-.035em;margin:0}
+    .profile-shell{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px}.profile-card,.details-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 8px 24px #1f5a5b08}.profile-card{display:grid;justify-items:center;text-align:center;align-content:start;gap:18px}.avatar-upload{position:relative;display:inline-grid;place-items:center;cursor:pointer;border-radius:50%}.avatar-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}.profile-avatar{display:grid;place-items:center;width:112px;height:112px;border-radius:50%;background:linear-gradient(135deg,#d7efec,#f4fbfa);color:var(--teal-dark);font-size:34px;font-weight:820;box-shadow:inset 0 0 0 1px #c4e4df}.camera-overlay{position:absolute;right:2px;bottom:2px;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#173f43;color:#fff;border:3px solid #fff;box-shadow:0 8px 18px #17323a24;opacity:0;transform:translateY(4px);transition:.16s}.camera-overlay svg{width:20px;height:20px;fill:currentColor}.avatar-upload:hover .camera-overlay,.avatar-upload:focus-within .camera-overlay{opacity:1;transform:none}.profile-summary{display:grid;gap:2px}.profile-name{font-size:22px;font-weight:820;letter-spacing:-.02em}.profile-login{color:var(--muted);font-weight:650}.profile-rights{width:100%;border-top:1px solid var(--line);padding-top:16px;text-align:left}.details-card{display:grid;gap:22px}.section-title{display:flex;align-items:center;gap:12px}.section-icon{display:inline-flex;align-items:center;justify-content:center;width:37px;height:37px;border-radius:11px;background:var(--tint);color:var(--teal)}.section-icon svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}.section-title h2{margin:0;font-size:17px;letter-spacing:-.015em}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.info-field{border:1px solid var(--line);border-radius:13px;padding:14px 15px;background:#fff}.info-label{color:var(--muted);font-size:11px;font-weight:760;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}.info-value{font-weight:740}.info-field.wide{grid-column:1/-1}.rights{display:flex;flex-wrap:wrap;gap:6px}.right-tag{display:inline-flex;align-items:center;min-height:26px;border-radius:99px;padding:0 9px;background:var(--tint);color:var(--teal-dark);font-size:11px;font-weight:720;border:1px solid #c9e6e2}.security-block{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:13px}.security-head{display:flex;align-items:center;justify-content:flex-start;gap:14px}.btn{border:1px solid var(--line);border-radius:10px;min-height:40px;padding:0 13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:760;background:#fff;color:#587077}.btn:hover{border-color:#b9d6d3;color:var(--teal-dark);background:#f8fcfb}.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}.btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}.btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}.password-panel{display:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:12px;align-items:end}.password-panel.visible{display:grid}.password-field{display:grid;gap:6px}.password-field label{color:var(--muted);font-size:12px;font-weight:760}.password-field input{width:100%;min-height:41px;border:1px solid #cbdadb;border-radius:10px;padding:0 12px;background:#fff;color:var(--ink)}.password-save{width:44px;height:41px;padding:0}.toast{position:fixed;right:24px;bottom:24px;background:#173f43;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 12px 28px #16333735;transform:translateY(12px);opacity:0;pointer-events:none;transition:.2s}.toast.show{transform:none;opacity:1}
+    @media(max-width:900px){.profile-shell{grid-template-columns:1fr}.title-row{align-items:flex-start;flex-direction:column}}@media(max-width:800px){.topbar{padding:0 15px;gap:8px}.brand{min-width:0}.brand span,.topnav .navtext,.user-link span:last-child{display:none}.nav-item{width:52px}.nav-item>.navlink{justify-content:center}.nav-caret{display:none}.journal-menu{width:270px}.logout{padding:0 9px}.info-grid,.password-panel{grid-template-columns:1fr}.password-save{width:100%}.profile-card,.details-card{padding:18px}}
+    .profile-shell{align-items:start}.profile-card,.details-card{min-height:560px}.profile-products{width:100%;border:1px solid #d7e6e5;border-radius:14px;background:#f8fbfb;padding:15px;text-align:left}.profile-products .info-label{color:var(--teal-dark);margin-bottom:9px}.profile-products .product-rights{display:grid;gap:8px;max-height:178px;overflow:hidden;transition:max-height .2s ease}.profile-products .product-rights.expanded{max-height:360px;overflow:auto}.profile-products .product-rights.collapsed .product-tag:nth-child(n+4){display:none}.profile-products .product-tag{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;min-height:42px;border:1px solid #cfe1e0;border-radius:10px;padding:9px 10px 9px 29px;background:#fff;color:var(--ink);font-size:12px;font-weight:720;line-height:1.3;white-space:normal}.profile-products .product-tag::before{content:"";position:absolute;left:11px;top:14px;width:8px;height:8px;border-radius:3px;background:#77b8b3;box-shadow:0 0 0 3px #e1f1ef}.product-toggle{width:100%;margin-top:9px;border:0;background:transparent;color:var(--teal-dark);font-size:12px;font-weight:780;text-align:left;padding:3px 0;cursor:pointer}.product-toggle:hover{text-decoration:underline}.password-panel{display:grid;visibility:hidden;opacity:0;pointer-events:none;min-height:65px;transition:opacity .16s ease}.password-panel.visible{visibility:visible;opacity:1;pointer-events:auto}@media(max-width:800px){.profile-card,.details-card{height:auto;min-height:0}.password-panel{min-height:151px}}
+    .profile-products .product-tag{align-items:center;gap:9px;padding:9px 10px}
+    .profile-products .product-tag::before{content:none}
+    .profile-products .product-icon{color:var(--teal)}
+    
+  </style>
+  <link rel="preload" as="image" href="vse-lab-icon-transparent.png" fetchpriority="high">
+  <link rel="stylesheet" href="app-shell.css">
+  <script src="app-shell.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="journal.html" id="brand-home" aria-label="Электронная лаборатория ВСЭ — главная"><img src="vse-lab-icon-transparent.png" alt="" width="43" height="43" loading="eager" decoding="sync" fetchpriority="high"><div><strong>Электронная лаборатория ВСЭ</strong><span>Лаборатория ВСЭ №1 г. Казань</span></div></a>
+    <nav class="topnav" aria-label="Основная навигация">
+      <a class="navlink" href="arrivals.html" id="arrivals-link"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.2 12 4l7.5 4.2-7.5 4.2-7.5-4.2Z"/><path d="M4.5 8.2v7.9L12 20l7.5-3.9V8.2"/><path d="M12 12.4V20"/></svg></span><span class="navtext">Поступления</span></a>
+      <a class="navlink" href="journal.html" id="journal-home"><span class="icon" aria-hidden="true">▦</span><span class="navtext">Журнал ВСЭ</span></a>
+      <a class="navlink" href="directories.html" id="directories"><span class="icon" aria-hidden="true">⚙</span><span class="navtext">Справочники</span></a>
+      <div class="nav-item product-switcher">
+        <button class="navlink product-trigger" id="product-switcher" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Тип продукции: Мясо и продукты убоя" data-short-label="Мясо"><span class="navtext" data-product-label>Мясо и продукты убоя</span><svg class="nav-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
+        <div class="journal-menu product-menu" role="listbox" aria-label="Тип продукции">
+          <button class="active" type="button" role="option" aria-selected="true" data-product-option="meat">Мясо и продукты убоя</button>
+          <button type="button" role="option" aria-selected="false" data-product-option="milk">Молоко и молочная продукция</button>
+        </div>
+      </div>
+    </nav>
+    <div class="user-area"><a class="user-link active" href="profile.html" id="profile"><span class="avatar">АК</span><span>Анна Кузнецова</span></a><button class="logout" type="button" id="logout">Выйти</button></div>
+  </header>
+  <main>
+    <div class="title-row"><h1>Профиль пользователя</h1></div>
+    <section class="profile-shell">
+      <aside class="profile-card">
+        <label class="avatar-upload" aria-label="Выбрать фото профиля"><div class="profile-avatar" aria-label="Аватар пользователя">АК</div><span class="camera-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.826 9.62a.957.957 0 01-.956-.953V6.762H1.957A.957.957 0 011 5.81c0-.524.43-.953.957-.953H3.87V2.952a.957.957 0 011.913 0v1.905h1.913c.526 0 .956.429.956.953 0 .523-.43.952-.956.952H5.783v1.905c0 .523-.43.952-.957.952zM17 14.5a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M18.055 6.762h3.032c1.052 0 1.913.857 1.913 1.905v11.428C23 21.143 22.14 22 21.087 22H5.783a1.915 1.915 0 01-1.913-1.905v-9.79c.287.162.602.266.956.266A1.914 1.914 0 006.74 8.667v-.953h.957A1.915 1.915 0 009.609 5.81c0-.353-.105-.667-.268-.953h6.122a1.91 1.91 0 011.406.62l1.186 1.285zM19 14.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z"/></svg></span><input type="file" accept="image/*" aria-label="Выбрать фото профиля"></label>
+        <div class="profile-summary">
+          <div class="profile-name">Анна Кузнецова</div>
+          <div class="profile-login">Kuznetsova.Anna@tatar.ru</div>
+        </div>
+        <div class="profile-rights">
+          <div class="info-label">Права доступа</div>
+          <div class="rights"><span class="right-tag">Создание ВСЭ</span><span class="right-tag">Редактирование ВСЭ</span><span class="right-tag">Просмотр ВСЭ</span><span class="right-tag">Создание справочников</span></div>
+        </div>
+        <div class="profile-products">
+          <div class="info-label">Доступные типы продукции</div>
+          <div class="rights product-rights"><span class="product-tag"><span class="product-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.7 3.3c4.8-.5 8.1 2.5 8.1 6.8 0 5.5-4.4 10.5-9.8 10.5-4.4 0-7.8-2.7-7.8-6.7 0-3.1 1.9-5.7 4.7-7.1 1.7-.9 2.5-3.2 4.8-3.5Z"/><path d="M12.6 7.3c2.7-.4 4.6 1.2 4.6 3.4 0 2.7-2.5 5-5.2 5-2.2 0-3.8-1.4-3.8-3.5 0-1.8 1.7-3.3 4.4-4.9Z"/></svg></span>Мясо и продукты убоя</span><span class="product-tag"><span class="product-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3h6v3l1.5 2.5V19a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2V8.5L9 6V3Z"/><path d="M9 6h6M7.5 11h9M7.5 16h9"/></svg></span>Молоко и молочная продукция</span></div>
+          <button class="product-toggle" id="product-toggle" type="button" hidden>Показать все</button>
+        </div>
+      </aside>
+      <section class="details-card">
+        <div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0114 0"/></svg></span><h2>Данные пользователя</h2></div>
+        <div class="info-grid">
+          <div class="info-field"><div class="info-label">Фамилия и имя</div><div class="info-value">Анна Кузнецова</div></div>
+          <div class="info-field"><div class="info-label">Логин</div><div class="info-value">Kuznetsova.Anna@tatar.ru</div></div>
+          <div class="info-field wide"><div class="info-label">Учреждение</div><div class="info-value">Лаборатория ВСЭ №1 г. Казань</div></div>
+          <div class="info-field"><div class="info-label">Должность</div><div class="info-value">Ветеринарный врач</div></div>
+          <div class="info-field"><div class="info-label">Дата регистрации</div><div class="info-value">12.03.2024</div></div>
+        </div>
+        <div class="security-block">
+          <div class="security-head"><button class="btn" id="change-password" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="14.5" r="3.5"/><path d="M11 14.5h10"/><path d="M17 14.5v-3"/><path d="M20 14.5v-2"/></svg>Сменить пароль</button></div>
+          <div class="password-panel" id="password-panel">
+            <div class="password-field"><label for="old-password">Старый пароль</label><input id="old-password" type="password" autocomplete="current-password" placeholder="Введите старый пароль"></div>
+            <div class="password-field"><label for="new-password">Новый пароль</label><input id="new-password" type="password" autocomplete="new-password" placeholder="Введите новый пароль"></div>
+            <button class="btn primary password-save" id="save-password" type="button" aria-label="Сохранить пароль"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+  <script>
+    const toast=document.getElementById('toast');function notice(message){toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2600)}
+    document.querySelector('.avatar-upload input').addEventListener('change',()=>notice('Выбор фото — демонстрация'));
+    const passwordPanel=document.getElementById('password-panel');
+    const productList=document.querySelector('.product-rights');const productToggle=document.getElementById('product-toggle');let productsExpanded=false;function updateProductList(){const count=productList.querySelectorAll('.product-tag').length;const collapsible=count>3;productToggle.hidden=!collapsible;productList.classList.toggle('collapsed',collapsible&&!productsExpanded);productList.classList.toggle('expanded',collapsible&&productsExpanded);productToggle.textContent=productsExpanded?'Свернуть':'Показать все ('+count+')'}updateProductList();productToggle.addEventListener('click',()=>{productsExpanded=!productsExpanded;updateProductList()});
+    document.getElementById('change-password').addEventListener('click',()=>{passwordPanel.classList.toggle('visible');if(passwordPanel.classList.contains('visible'))document.getElementById('old-password').focus()});
+    document.getElementById('save-password').addEventListener('click',()=>{document.getElementById('old-password').value='';document.getElementById('new-password').value='';passwordPanel.classList.remove('visible');notice('Смена пароля — демонстрация')});
+    document.getElementById('logout').addEventListener('click',()=>{window.location.href='login.html'});
+  </script>
+</body>
+</html>
+
+
+

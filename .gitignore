@@ -1,0 +1,21 @@
+# Installed dependencies and generated builds
+node_modules/
+storybook-static/
+dist/
+.cache/
+.vite/
+
+# Local research, screenshots, and temporary working files
+tmp/
+test-results/
+playwright-report/
+coverage/
+*.log
+
+# Local credentials and editor settings
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.vscode/

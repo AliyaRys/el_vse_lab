@@ -1,0 +1,325 @@
+/* Shared layout for every mockup: keep document and logo geometry stable. */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+.topbar .brand {
+  height: 43px;
+}
+
+.topbar .brand img {
+  display: block;
+  flex: 0 0 43px;
+  width: 43px;
+  min-width: 43px;
+  max-width: 43px;
+  height: 43px;
+  min-height: 43px;
+  max-height: 43px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 0;
+  box-shadow: none;
+  view-transition-name: lab-logo;
+}
+
+/* Shared application navigation. */
+.topbar {
+  gap: 12px;
+  height: 76px;
+  min-height: 76px;
+  box-sizing: border-box;
+}
+
+.topbar .brand {
+  width: 275px;
+  min-width: 275px;
+  max-width: 275px;
+  flex: 0 0 275px;
+}
+
+.topbar .brand strong {
+  font-size: 15px;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+.topbar .brand span {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.topnav,
+.topnav > .navlink,
+.product-switcher {
+  height: 42px;
+}
+
+.user-area {
+  min-height: 42px;
+  flex: 0 0 auto;
+}
+
+.topnav {
+  min-width: 0;
+  margin-left: 8px;
+}
+
+.topnav > .navlink,
+.product-switcher > .product-trigger {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.topnav > .navlink .icon,
+.product-switcher .nav-caret {
+  flex: 0 0 auto;
+}
+
+.topbar .icon {
+  width: 19px;
+  height: 19px;
+  font-size: 18px;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+}
+
+.product-switcher {
+  position: relative;
+  width: 310px;
+  flex: 0 0 310px;
+}
+
+.product-switcher > .product-trigger {
+  width: 100%;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.product-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: var(--teal);
+}
+
+.product-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.product-switcher > .product-trigger,
+.product-switcher:hover > .product-trigger,
+.product-switcher:focus-within > .product-trigger {
+  background: #fff;
+  border-color: transparent;
+  color: #4c6870;
+  box-shadow: none;
+}
+
+.product-switcher > .product-trigger .navtext {
+  margin-right: 0;
+}
+
+.product-switcher > .product-trigger .nav-caret {
+  margin-left: 0;
+}
+
+.product-switcher:hover .product-menu,
+.product-switcher:focus-within:not(.open) .product-menu {
+  display: none;
+}
+
+.product-switcher.open .product-menu {
+  display: grid;
+}
+
+.product-menu {
+  width: max-content;
+  min-width: 290px;
+  max-width: calc(100vw - 30px);
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 4px;
+  align-items: stretch;
+}
+
+.product-menu button {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  color: #4d676d;
+  font: inherit;
+  font-weight: 620;
+  line-height: 1.35;
+  text-align: left;
+  white-space: normal;
+}
+
+.product-menu button:hover,
+.product-menu button:focus-visible {
+  background: var(--tint);
+  color: var(--teal-dark);
+}
+
+.product-menu button.active {
+  background: var(--tint);
+  color: var(--teal-dark);
+  font-weight: 720;
+  box-shadow: inset 0 0 0 1px #c9e6e2;
+}
+
+.product-menu button.active::after {
+  content: "✓";
+  color: var(--teal);
+  font-weight: 900;
+  margin-left: auto;
+}
+
+@media (max-width: 1200px) and (min-width: 801px) {
+  .topbar .user-link > span:last-child:not(.avatar) {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 801px) {
+  .topbar .brand {
+    width: 43px;
+    min-width: 43px;
+    max-width: 43px;
+    flex: 0 0 43px;
+  }
+
+  .topbar .brand > div {
+    display: none;
+  }
+}
+
+@media (max-width: 920px) and (min-width: 801px) {
+  .topnav > .navlink > .navtext {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .topbar {
+    padding-inline: 10px;
+    gap: 4px;
+  }
+
+  .topbar .brand {
+    width: 43px;
+    min-width: 43px;
+    max-width: 43px;
+    flex: 0 0 43px;
+  }
+
+  .topbar .brand > div {
+    display: none;
+  }
+
+  .topnav {
+    gap: 4px;
+    margin-left: 6px;
+  }
+
+  .topbar .user-area .user-link {
+    display: none;
+  }
+
+  .topnav > .navlink {
+    width: 46px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .product-switcher {
+    width: 78px;
+    flex-basis: 78px;
+  }
+
+  .product-switcher > .product-trigger {
+    width: 78px;
+    min-width: 78px;
+    justify-content: center;
+    gap: 3px;
+    padding: 0 5px;
+  }
+
+  .product-trigger::before {
+    content: attr(data-short-label);
+    order: 2;
+    font-size: 10px;
+    font-weight: 760;
+  }
+
+  .product-trigger .product-icon {
+    order: 1;
+    width: 17px;
+    height: 17px;
+    flex-basis: 17px;
+  }
+
+  .product-trigger .product-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .product-trigger .navtext,
+  .product-trigger .nav-caret {
+    display: none !important;
+  }
+
+  .product-menu {
+    position: fixed;
+    top: 62px;
+    left: auto;
+    right: 15px;
+    width: min(290px, calc(100vw - 30px));
+    min-width: 0;
+  }
+
+}
+
+/* Keep the previous document visible until the new document can be painted.
+   The shared logo gets its own snapshot; it never slides or cross-fades. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root),
+::view-transition-group(lab-logo),
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-old(lab-logo),
+::view-transition-new(lab-logo) {
+  animation: none;
+}
+
+::view-transition-old(root) {
+  display: none;
+}
+
+::view-transition-old(lab-logo),
+::view-transition-new(lab-logo) {
+  mix-blend-mode: normal;
+}
