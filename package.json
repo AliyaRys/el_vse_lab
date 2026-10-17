@@ -1,0 +1,27 @@
+{
+  "name": "el-vse-lab",
+  "version": "1.0.0",
+  "description": "Рабочее место сотрудников лабораторий ВСЭ",
+  "private": true,
+  "scripts": {
+    "storybook": "storybook dev -p 6006 --host 127.0.0.1",
+    "build-storybook": "storybook build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliyaRys/el_vse_lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/AliyaRys/el_vse_lab/issues"
+  },
+  "homepage": "https://github.com/AliyaRys/el_vse_lab#readme",
+  "devDependencies": {
+    "storybook": "^10.6.2",
+    "@storybook/html-vite": "^10.6.2",
+    "@storybook/addon-a11y": "^10.6.2",
+    "@storybook/addon-docs": "^10.6.2"
+  }
+}

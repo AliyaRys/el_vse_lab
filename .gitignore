@@ -12,6 +12,9 @@ playwright-report/
 coverage/
 *.log
 
+# Unused stock illustrations from the Storybook installer
+stories/assets/
+
 # Local credentials and editor settings
 .env
 .env.*
@@ -19,3 +22,5 @@ coverage/
 .DS_Store
 Thumbs.db
 .vscode/
+
+*storybook.log
