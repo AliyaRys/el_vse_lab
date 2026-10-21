@@ -1,5 +1,10 @@
 .invoice-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:13px}
 .invoice-table{width:100%;min-width:650px;border-collapse:collapse;text-align:left}
+.invoice-table.standardized-columns{table-layout:fixed}
+.invoice-table.standardized-columns .invoice-service-column{width:34%}
+.invoice-table.standardized-columns .invoice-quantity-column{width:28%}
+.invoice-table.standardized-columns .invoice-rate-column{width:19%}
+.invoice-table.standardized-columns .invoice-sum-column{width:19%}
 .invoice-table th{padding:11px 14px;background:#f5f9f8;color:var(--muted);font-size:11px;font-weight:780;letter-spacing:.05em;text-transform:uppercase}
 .invoice-table td{padding:15px 14px;border-top:1px solid var(--line);vertical-align:top}
 .invoice-table td:first-child{font-weight:700;color:#29474d}

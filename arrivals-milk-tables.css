@@ -39,6 +39,10 @@ body[data-milk-stage="expected"]>main{max-width:1180px}
 .accepted-table .work-cell-number{font-weight:500;overflow:hidden;text-overflow:ellipsis}
 .accepted-table .accepted-row.hidden{display:none}
 .accepted-table-scroll{overflow-x:visible}
+.accepted-table-shell{position:relative;z-index:1;overflow:visible}
+body[data-milk-stage="accepted"] .filters{position:relative;z-index:2}
+body[data-milk-stage="accepted"]:has(.accepted-table .inspection-menu[open]) .accepted-table-shell,
+body[data-milk-stage="accepted"]:has(.accepted-table .conclusion-menu[open]) .accepted-table-shell{z-index:3}
 .table-primary{display:block;color:var(--ink);font-weight:500;line-height:1.25}
 .table-result{display:block;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .table-result.good{color:var(--good)}
@@ -51,6 +55,7 @@ body[data-milk-stage="expected"]>main{max-width:1180px}
 .accepted-table .table-actions{display:grid;grid-template-columns:repeat(3,36px);gap:6px;align-items:center;justify-content:center}
 .accepted-table .conclusion-menu{display:block;grid-column:1}
 .accepted-table .inspection-menu{display:block;grid-column:2;position:relative}
+.accepted-table .inspection-menu[open]{z-index:90}
 .accepted-table .inspection-menu summary{list-style:none}
 .accepted-table .inspection-menu summary::-webkit-details-marker{display:none}
 .accepted-table .milk-eye{grid-column:3}

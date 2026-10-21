@@ -1,8 +1,9 @@
 (() => {
   const parties = {
-    'ak-bars': { owner: 'КФХ «Ак Барс»', number: 'RU016:260812-007101', date: '12.08.2026 08:40', arrival: '2026-08-12T09:18', product: 'Молоко коровье сырое', amount: '120 л', vehicle: 'А245КМ 116', partLabel: 'Секция', amountLabel: 'Объём', parts: ['40 л', '40 л', '40 л'] },
-    nur: { owner: 'КФХ «Нур»', number: 'RU016:260812-007118', date: '12.08.2026 10:15', arrival: '2026-08-12T11:52', product: 'Молоко коровье сырое', amount: '80 л', vehicle: 'Н831ОР 116', partLabel: 'Секция', amountLabel: 'Объём', parts: ['80 л'] },
-    sadykova: { owner: 'ЛПХ Садыкова Р.Р.', number: 'RU016:260812-007133', date: '12.08.2026 12:30', arrival: '2026-08-12T13:07', product: 'Творог непромышленного изготовления', amount: '15 кг', vehicle: 'Т019ЕК 716', partLabel: 'Ёмкость', amountLabel: 'Масса', parts: ['5 кг', '5 кг', '5 кг'] }
+    'ak-bars-draft': { owner: 'КФХ «Ак Барс»', address: 'Республика Татарстан, Высокогорский район, с. Высокая Гора, ул. Центральная, д. 18', number: 'RU016:260810-005214', date: '10.08.2026', arrival: '2026-08-10T11:15', product: 'Молоко коровье сырое', amount: '120 л', partLabel: 'Секция', amountLabel: 'Объём', parts: ['40 л', '40 л', '40 л'] },
+    'ak-bars': { owner: 'КФХ «Ак Барс»', address: 'Республика Татарстан, Высокогорский район, с. Высокая Гора, ул. Центральная, д. 18', number: 'RU016:260812-007101', date: '12.08.2026 08:40', arrival: '2026-08-12T09:18', product: 'Молоко коровье сырое', amount: '120 л', partLabel: 'Секция', amountLabel: 'Объём', parts: ['40 л', '40 л', '40 л'] },
+    nur: { owner: 'КФХ «Нур»', address: 'Республика Татарстан, Арский район, с. Новый Кырлай, ул. Тукая, д. 12', number: 'RU016:260812-007118', date: '12.08.2026 10:15', arrival: '2026-08-12T11:52', product: 'Молоко коровье сырое', amount: '80 л', partLabel: 'Секция', amountLabel: 'Объём', parts: ['80 л'] },
+    sadykova: { owner: 'ЛПХ Садыкова Р.Р.', address: 'Республика Татарстан, Лаишевский район, с. Столбище, ул. Советская, д. 27', number: 'RU016:260812-007133', date: '12.08.2026 12:30', arrival: '2026-08-12T13:07', product: 'Творог непромышленного изготовления', amount: '15 кг', partLabel: 'Ёмкость', amountLabel: 'Масса', parts: ['5 кг', '5 кг', '5 кг'] }
   };
   const params = new URLSearchParams(location.search);
   const key = parties[params.get('party')] ? params.get('party') : 'ak-bars';
@@ -13,9 +14,9 @@
   document.getElementById('vsd-date').value = party.date;
   document.getElementById('arrival-time').value = party.arrival;
   document.getElementById('owner').value = party.owner;
+  document.getElementById('address').value = party.address;
   document.getElementById('product').value = party.product;
   document.getElementById('amount').value = party.amount;
-  document.getElementById('vehicle').value = party.vehicle;
   const compositionHead = document.querySelector('.composition-head');
   compositionHead.children[0].textContent = party.partLabel;
   compositionHead.children[1].textContent = party.amountLabel;
@@ -26,6 +27,7 @@
 
   const researchGrid = document.getElementById('milk-research-grid');
   MilkSectionResearch.renderEditor(researchGrid, party);
+  globalThis.MilkVseSelects?.enhance(document);
   const studies = [...document.querySelectorAll('.study-card')];
   const isRowFilled = row => {
     const radio = row.querySelector('input[type="radio"]:checked');
@@ -65,7 +67,7 @@
     if (invalid) {
       const target = invalid.type === 'radio' ? invalid.closest('.study-card') : invalid;
       target.classList.add('invalid');
-      invalid.focus();
+      globalThis.MilkVseSelects?.focus(invalid)||invalid.focus();
       notice('Заполните обязательные результаты исследований');
       return;
     }

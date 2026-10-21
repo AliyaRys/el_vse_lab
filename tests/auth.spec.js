@@ -8,6 +8,7 @@ const require = createRequire(import.meta.url);
 const loginUrl = pathToFileURL(resolve('login.html')).href;
 const recoveryUrl = pathToFileURL(resolve('password-recovery.html')).href;
 const recoverySentUrl = pathToFileURL(resolve('password-recovery-sent.html')).href;
+const activationUrl = pathToFileURL(resolve('admin_makets/account-activation.html')).href;
 const storyUrl = id => `http://127.0.0.1:6007/iframe.html?id=${id}&viewMode=story`;
 const screenshotDir = resolve('test-results');
 const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -101,6 +102,54 @@ test('Восстановление: составная форма блокиру
     return { calls, busy, type: form.field.input.type, autocomplete: form.field.input.autocomplete };
   });
   expect(result).toEqual({ calls: 1, busy: true, type: 'email', autocomplete: 'email' });
+});
+
+test('Активация: личные данные появляются после проверки, пароль валидируется и не сохраняется', async ({ page }) => {
+  await page.goto(activationUrl);
+  await page.evaluate(() => localStorage.removeItem('vse-admin-demo-v1'));
+  await page.reload();
+  await expect(page.getByText('Проверяем приглашение…', { exact: true })).toBeVisible();
+  await expect(page.getByText('Бикмуллин Ринат Рашидович', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Бикмуллин Ринат Рашидович', { exact: true })).toBeVisible();
+  const password = page.getByLabel('Новый пароль', { exact: true });
+  const repeat = page.getByLabel('Повторите пароль', { exact: true });
+  await expect(password).toHaveAttribute('autocomplete', 'new-password');
+  await page.getByRole('button', { name: 'Активировать учётную запись' }).click();
+  await expect(password).toBeFocused();
+  await password.fill('Пароль2026');
+  await repeat.fill('Другой2026');
+  await page.getByRole('button', { name: 'Активировать учётную запись' }).click();
+  await expect(page.getByText('Пароли не совпадают.', { exact: true })).toBeVisible();
+  await repeat.fill('Пароль2026');
+  await page.getByRole('button', { name: 'Активировать учётную запись' }).click();
+  await expect(page.getByText(/Учётная запись активирована/)).toBeVisible();
+  const saved = await page.evaluate(() => localStorage.getItem('vse-admin-demo-v1') || '');
+  expect(saved).not.toContain('Пароль2026');
+  const state = JSON.parse(saved);
+  expect(state.overrides['u-1002'].status).toBe('active');
+  expect(state.overrides['u-1002'].history.filter(item => item.type === 'activated')).toHaveLength(1);
+});
+
+test('Активация: использованная и недействительная ссылки не раскрывают форму', async ({ page }) => {
+  await page.goto(`${activationUrl}?state=used`);
+  await expect(page.getByText('Приглашение уже использовано.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Войти', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Восстановить пароль', exact: true })).toBeVisible();
+  await expect(page.getByLabel('Новый пароль', { exact: true })).toHaveCount(0);
+  await page.goto(`${activationUrl}?state=revoked`);
+  await expect(page.getByText('Приглашение недействительно.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Бикмуллин Ринат Рашидович', { exact: true })).toHaveCount(0);
+});
+
+test('Активация: изменение статуса во время ввода не сохраняет пароль', async ({ page }) => {
+  await page.goto(activationUrl);
+  await page.evaluate(() => localStorage.removeItem('vse-admin-demo-v1'));
+  await page.goto(`${activationUrl}?state=blocked-during`);
+  await page.getByLabel('Новый пароль', { exact: true }).fill('Пароль2026');
+  await page.getByLabel('Повторите пароль', { exact: true }).fill('Пароль2026');
+  await page.getByRole('button', { name: 'Активировать учётную запись' }).click();
+  await expect(page.getByText(/Активация недоступна/)).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('vse-admin-demo-v1') || '')).not.toContain('Пароль2026');
 });
 
 test('Форма: ожидание, повторная отправка и демонстрационный результат', async ({ page }) => {

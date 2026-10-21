@@ -42,6 +42,7 @@
   </style>
   <link rel="preload" as="image" href="vse-lab-icon-transparent.png" fetchpriority="high">
   <link rel="stylesheet" href="app-shell.css">
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
   <link rel="stylesheet" href="vse-view-actions.css">
   <link rel="stylesheet" href="vse-part-outcomes.css">
@@ -68,7 +69,7 @@
     <div class="user-area"><a class="user-link" href="profile.html" id="profile"><span class="avatar">АК</span><span>Анна Кузнецова</span></a><button class="logout" type="button" id="logout">Выйти</button></div>
   </header>
   <main>
-    <div class="title-row"><div><p class="eyebrow">Просмотр записи</p><h1>ВСЭ №154-М</h1></div><a class="btn icon-only tooltip" href="electronic-vse-journal.html" aria-label="Редактировать ВСЭ" data-tooltip="Редактировать ВСЭ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg></a></div>
+    <div class="title-row"><div><p class="eyebrow">Просмотр записи</p><h1>ВСЭ №154-М</h1></div><button class="btn icon-only tooltip" type="button" aria-label="Редактировать ВСЭ" data-tooltip="Редактировать ВСЭ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg></button></div>
     <div class="record">
       <section class="section">
         <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l4 4v14H4V3h4z"/><path d="M16 3v5h5"/><path d="M8 12h8"/><path d="M8 16h6"/></svg></span><div><h2>Сведения об экспертизе</h2></div></div></div>
@@ -80,7 +81,7 @@
         </div>
       </section>
       <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 20V9l5-5 5 5v11"/><path d="M9.5 13h5"/></svg></span><div><h2>Владелец и продукция</h2></div></div></div>
+        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20h12"/><path d="M12 4v16"/><path d="M5 8h14"/><path d="M7 8l-3 6h6L7 8z"/><path d="M17 8l-3 6h6l-3-6z"/></svg></span><div><h2>Владелец и продукция</h2></div></div></div>
         <div class="grid">
           <div class="field wide"><label>Наименование хозяйства / ФИО</label><input id="view-owner" value="КФХ «Нур»" readonly></div>
           <div class="field full"><label>Адрес владельца</label><input value="Республика Татарстан, Лаишевский район, с. Столбище" readonly></div>

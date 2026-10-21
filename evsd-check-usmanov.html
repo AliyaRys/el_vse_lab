@@ -35,7 +35,12 @@
   </style>
   <link rel="preload" as="image" href="vse-lab-icon-transparent.png" fetchpriority="high">
   <link rel="stylesheet" href="app-shell.css">
+  <link rel="stylesheet" href="components/app/evsd-check-values.css?v=20261018-1">
+  <link rel="stylesheet" href="components/checks/check-ui.css?v=20261019-1">
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
+  <script src="components/icons/VseIcon.js?v=20261019-1" defer></script>
+  <script src="components/checks/CheckUi.js?v=20261019-1" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -56,9 +61,9 @@
   </header>
   <main>
     <div class="title-row"><div><h1>Сверка данных транспортного эВСД</h1></div><span class="mercury-badge"><img src="mercury-logo.webp" alt=""> Меркурий</span></div>
-    <form id="check-form">
-      <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/></svg></span><div><h2>Документ</h2><p>Реквизиты транспортного эВСД и связанного контроля поставки.</p></div></div></div>
+    <form id="check-form" class="vse-check-ui" novalidate>
+      <section class="section" data-check-section="document">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Документ</h2><p>Реквизиты транспортного эВСД и связанного контроля поставки.</p></div></div></div>
         <div class="compare-grid">
           <div class="compare-row reference"><div class="field-name">Номер эВСД</div><div class="mercury-value">RU016:260812-005102</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Введите фактический номер"></div></div>
           <div class="compare-row reference"><div class="field-name">Дата оформления</div><div class="mercury-value">12.08.2026 08:12</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input type="datetime-local"></div></div>
@@ -66,8 +71,8 @@
           <div class="compare-row reference"><div class="field-name">Назначение груза</div><div class="mercury-value">Реализация на розничном рынке</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Укажите назначение"></div></div>
         </div>
       </section>
-      <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-7h6v7"/></svg></span><div><h2>Участники перевозки</h2><p>Отправитель, получатель и площадки, указанные в эВСД.</p></div></div></div>
+      <section class="section" data-check-section="participants">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Участники перевозки</h2><p>Отправитель, получатель и площадки, указанные в эВСД.</p></div></div></div>
         <div class="compare-grid">
           <div class="compare-row"><div class="field-name">Отправитель</div><div class="mercury-value">ИП Усманов И.К.</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Кто фактически отправил"></div></div>
           <div class="compare-row"><div class="field-name">Адрес отправителя</div><div class="mercury-value">Республика Татарстан, г. Казань, ул. Аграрная, 7</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактический адрес"></div></div>
@@ -75,8 +80,8 @@
           <div class="compare-row"><div class="field-name">Адрес получателя</div><div class="mercury-value">г. Казань, ул. Аграрная, д. 2</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактический адрес получателя"></div></div>
         </div>
       </section>
-      <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"/></svg></span><div><h2>Идентификация продукции по наименованию и визуальным осмотром</h2><p>Продукция, номенклатура, объём и ветеринарные характеристики партии.</p></div></div></div>
+      <section class="section" data-check-section="product">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Идентификация продукции по наименованию и визуальным осмотром</h2><p>Продукция, номенклатура, объём и ветеринарные характеристики партии.</p></div></div></div>
         <div class="compare-grid product-compare-grid">
           <div class="compare-row"><div class="field-name">Вид продукции</div><div class="mercury-value">Говядина охлажденная</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактическая продукция"></div></div>
           <div class="compare-row"><div class="field-name">Номенклатура</div><div class="mercury-value">Мясо говядины в тушах, охлажденное</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактическая номенклатура"></div></div>
@@ -87,8 +92,8 @@
           <div class="compare-row"><div class="field-name">Срок годности</div><div class="mercury-value">до 16.08.2026</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input type="date"></div></div>
         </div>
       </section>
-      <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 16h13V6H3z"/><path d="M16 10h3l2 3v3h-5z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><div><h2>Ветеринарно-санитарная оценка и идентификация транспорта</h2><p>Сведения о перевозке и транспортном средстве.</p></div></div></div>
+      <section class="section" data-check-section="transport">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Ветеринарно-санитарная оценка и идентификация транспорта</h2><p>Сведения о перевозке и транспортном средстве.</p></div></div></div>
         <div class="compare-grid">
           <div class="compare-row"><div class="field-name">Вид транспорта</div><div class="mercury-value">Автомобильный</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактический вид транспорта"></div></div>
           <div class="compare-row"><div class="field-name">Номер ТС</div><div class="mercury-value">А245КМ 116</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактический номер ТС"></div></div>
@@ -97,15 +102,15 @@
         </div>
         <div class="transport-observations" aria-label="Фактическое состояние перевозки"><div class="transport-observation"><label for="cargo-condition">Состояние грузового отделения</label><select id="cargo-condition" required><option value="" selected disabled hidden>Выберите значение</option><option>Соответствует требованиям</option><option>Есть загрязнения или повреждения</option></select></div><div class="transport-observation"><label for="combined-cargo">Совместная перевозка с другими грузами</label><select id="combined-cargo" required><option value="" selected disabled hidden>Выберите значение</option><option>Нет</option><option>Да, грузы разделены</option><option>Да, разделение не обеспечено</option></select></div></div>
       </section>
-      <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/><path d="M5 3h14v18H5z"/></svg></span><div><h2>Сопроводительные документы</h2><p>Товарно-транспортная накладная и дополнительные документы партии.</p></div></div></div>
+      <section class="section" data-check-section="documents">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Сопроводительные документы</h2><p>Товарно-транспортная накладная и дополнительные документы партии.</p></div></div></div>
         <div class="compare-grid">
           <div class="compare-row"><div class="field-name">ТТН</div><div class="mercury-value">№ ТТН-102 от 12.08.2026</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактическая ТТН"></div></div>
           <div class="compare-row"><div class="field-name">Связанные документы</div><div class="mercury-value">Удостоверение качества № 54/26, декларация соответствия ЕАЭС N RU Д-RU.РА05</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><textarea placeholder="Укажите фактические документы"></textarea></div></div>
         </div>
       </section>
-      <section class="section">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span><div><h2>Ранее проведённая ВСЭ</h2><p>Сведения из мероприятий с партией продукции: номер экспертизы, дата, организация и результат осмотра.</p></div></div></div>
+      <section class="section" data-check-section="priorVse">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Ранее проведённая ВСЭ</h2><p>Сведения из мероприятий с партией продукции: номер экспертизы, дата, организация и результат осмотра.</p></div></div></div>
         <div class="compare-grid">
           <div class="compare-row reference"><div class="field-name">Номер экспертизы</div><div class="mercury-value">ВСЭ № 902</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input placeholder="Фактический номер экспертизы"></div></div>
           <div class="compare-row reference"><div class="field-name">Дата проведения</div><div class="mercury-value">12.08.2026 07:55</div><button class="check-button ok" type="button" data-state="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button><button class="check-button bad" type="button" data-state="bad"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="fact-field"><label>Фактическое значение</label><input type="datetime-local"></div></div>
@@ -128,8 +133,8 @@
           </div>
         </details>
       </section>
-      <section class="section invoice-section" aria-labelledby="invoice-title">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-3-2-4 2-4-2-3 2V3Z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><h2 id="invoice-title">Расчёт стоимости услуг</h2><p>Услуги по сверке партии и транспорта, их количество, тарифы и итоговая сумма.</p></div></div></div>
+      <section class="section invoice-section" data-check-section="invoice" aria-labelledby="invoice-title">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2 id="invoice-title">Расчёт стоимости услуг</h2><p>Услуги по сверке партии и транспорта, их количество, тарифы и итоговая сумма.</p></div></div></div>
         <div class="invoice-table-wrap">
           <table class="invoice-table">
             <thead><tr><th scope="col">Услуга</th><th scope="col">Количество</th><th scope="col">Тариф</th><th scope="col">Сумма</th></tr></thead>
@@ -141,7 +146,7 @@
         </div>
         <div class="invoice-total"><span>Итого к оплате</span><strong>376 ₽</strong></div>
       </section>
-      <div class="actions"><a class="btn" href="arrivals.html">Отмена</a><button class="btn success" id="mark-all-ok" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 12.5 3.5 3.5 7-8"/><path d="m10.5 12.5 3.5 3.5 7-8"/></svg>Все соответствует</button><button class="btn primary" type="submit">Завершить</button></div>
+      <div class="actions"><a class="btn" href="arrivals.html">Отмена</a><button class="btn success" id="mark-all-ok" type="button" data-check-complete-icon>Все соответствует</button><button class="btn primary" type="submit">Завершить</button></div>
     </form>
   </main>
   <div class="modal-backdrop" id="extinguish-modal" aria-hidden="true">

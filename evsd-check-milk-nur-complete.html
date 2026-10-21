@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="milk-evsd-check-complete.css">
   <link rel="stylesheet" href="app-shell.css">
   <link rel="stylesheet" href="evsd-invoice.css">
+  <link rel="stylesheet" href="components/app/evsd-check-values.css">
+  <script src="components/app/CompletedCheckStatus.js"></script>
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
 </head>
 <body data-party="nur">
@@ -57,8 +60,8 @@
       <div class="check-card" data-check="vehicle"><div class="field-name">Номер ТС</div><div class="mercury-value">Н831ОР 116</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
       <div class="check-card" data-check="trailer"><div class="field-name">Номер прицепа</div><div class="mercury-value">Прицеп отсутствует</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
       <div class="check-card" data-check="storage"><div class="field-name">Способ хранения продукции при перевозке</div><div class="mercury-value">Охлажденное</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
-      <div class="check-card info-card"><div class="field-name">Состояние грузового отделения</div><div class="mercury-value" id="completed-cargo">Соответствует требованиям</div></div>
-      <div class="check-card info-card"><div class="field-name">Совместная перевозка с другими грузами</div><div class="mercury-value" id="completed-combined">Нет</div></div>
+      <div class="check-card info-card" data-completed-status="cargo"><div class="field-name">Состояние грузового отделения</div><div class="mercury-value" id="completed-cargo">Соответствует требованиям</div></div>
+      <div class="check-card info-card" data-completed-status="combined"><div class="field-name">Совместная перевозка с другими грузами</div><div class="mercury-value" id="completed-combined">Нет</div></div>
     </div></section>
 
     <section class="section"><div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h8"></path><path d="M8 11h8"></path><path d="M8 15h5"></path><path d="M5 3h14v18H5z"></path></svg></span><div><h2>Сопроводительные документы</h2><p>Документы, указанные в транспортном эВСД.</p></div></div></div><div class="check-grid">
@@ -97,6 +100,7 @@
       const mark=card.querySelector('.ok-mark');if(mark){mark.className='bad-mark';mark.innerHTML=badIcon}
       if(item.fact){const fact=document.createElement('div');fact.className='fact-value';const label=document.createElement('span');label.textContent='Фактическое значение';const value=document.createElement('strong');value.textContent=item.fact;fact.append(label,value);card.append(fact)}
     });
+    globalThis.VseApp?.applyCompletedTransportStatuses(document);
     document.querySelectorAll('.mercury-value').forEach(value=>{value.title=value.textContent.trim()});
     document.getElementById('logout').addEventListener('click',()=>{location.href='login.html'});
   </script>

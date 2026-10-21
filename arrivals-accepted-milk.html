@@ -34,17 +34,18 @@
   </style>
   <link rel="preload" as="image" href="vse-lab-icon-transparent.png" fetchpriority="high">
   <link rel="stylesheet" href="app-shell.css">
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
   <link rel="stylesheet" href="milk-arrivals.css">
   <script src="milk-arrivals.js" defer></script>
   <link rel="stylesheet" href="arrivals-cards.css">
-  <link rel="stylesheet" href="milk-accepted-actions.css">
+  <link rel="stylesheet" href="milk-accepted-actions.css?v=20261019-8">
   <link rel="stylesheet" href="arrivals-accepted-filter.css">
   <link rel="stylesheet" href="arrivals-work-table.css">
   <link rel="stylesheet" href="arrivals-milk-tables.css">
   <script src="milk-accepted-columns.js" defer></script>
   <script src="milk-accepted-parties.js" defer></script>
-  <script src="milk-accepted-actions.js" defer></script>
+  <script src="milk-accepted-actions.js?v=20261019-8" defer></script>
 </head>
 <body class="milk-page" data-milk-stage="accepted">
   <header class="topbar">
@@ -117,12 +118,8 @@
 <dialog class="milk-dialog" id="milk-summary" aria-labelledby="milk-summary-title"><div class="milk-dialog-box"><div class="milk-dialog-head"><h2 id="milk-summary-title">Сведения о партии</h2><button class="milk-dialog-close" type="button" data-close-milk-summary aria-label="Закрыть окно">×</button></div><dl class="milk-dialog-fields" id="milk-summary-fields"></dl><div class="milk-dialog-footer"><button class="milk-dialog-dismiss" type="button" data-close-milk-summary>Закрыть</button><a class="milk-dialog-link" id="milk-summary-link" href="journal-milk.html">Открыть журнал ВСЭ</a></div></div></dialog>
 <dialog class="max-dialog milk-max-dialog" id="milk-max" aria-labelledby="max-title"><div class="max-dialog-head"><h2 id="max-title">Отправить заключение в Max</h2><button class="max-close" type="button" data-close-max aria-label="Закрыть">×</button></div><form class="max-form" id="max-form" novalidate><div class="max-document"><span>Отправляемый документ</span><strong id="max-document-name"></strong><a id="max-conclusion-file" href="conclusion-milk-204.svg" target="_blank" rel="noopener">Просмотреть заключение</a><span id="max-recipient"></span></div><label class="max-phone-label" for="max-phone">Номер телефона владельца</label><input class="max-phone" id="max-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 999 123-45-67" required><div class="max-result" id="max-result" role="status" aria-live="polite"></div><div class="max-actions"><button type="button" data-close-max>Отмена</button><button class="max-submit" id="max-submit" type="submit" disabled>Отправить</button></div></form></dialog>
 <div id="print-sheet" aria-hidden="true"><img id="print-image" alt=""></div>
-<dialog class="milk-dialog" id="milk-inspection-summary" aria-labelledby="milk-inspection-title"><div class="milk-dialog-box"><div class="milk-dialog-head"><h2 id="milk-inspection-title">Повторный ветосмотр</h2><button class="milk-dialog-close" type="button" data-close-inspection aria-label="Закрыть">×</button></div><dl class="milk-dialog-fields" id="milk-inspection-fields"></dl></div></dialog>
+<dialog class="milk-dialog inspection-history-dialog" id="milk-inspection-summary" aria-labelledby="milk-inspection-title"><div class="milk-dialog-box"><div class="milk-dialog-head"><h2 id="milk-inspection-title">Повторные ветосмотры</h2><button class="milk-dialog-close" type="button" data-close-inspection aria-label="Закрыть">×</button></div><div class="inspection-history-list" id="milk-inspection-fields"></div></div></dialog>
 </body>
 </html>
-
-
-
-
 
 

@@ -11,7 +11,7 @@
     { key: 'somo', title: 'Сухой обезжиренный молочный остаток (СОМО), %', type: 'number', step: '0.1', placeholder: 'Например, 8,6' },
     { key: 'somatic', title: 'Соматические клетки, тыс./см³', type: 'number', step: '1', placeholder: 'Например, 240' },
     { key: 'brucellosis', title: 'Кольцевая реакция на бруцеллёз', type: 'select', options: [['negative', 'Отрицательная'], ['doubtful', 'Сомнительная'], ['positive', 'Положительная']] },
-    { key: 'antibiotics', title: 'Антибиотики', type: 'select', options: [['none', 'Не обнаружено'], ['found', 'Обнаружено']] }
+    { key: 'antibiotics', title: 'Содержание потенциально опасных веществ (антибиотиков)', type: 'select', options: [['none', 'Не обнаружено'], ['found', 'Обнаружено']] }
   ];
 
   const partTitle = (party, index) => `${party.partLabel} ${index + 1} · ${party.parts[index]}`;
@@ -60,6 +60,7 @@
     }
     if (definition.type === 'select') {
       const select = document.createElement('select');
+      select.dataset.librarySelect = '';
       select.name = `${definition.key}-${index + 1}`;
       select.setAttribute('aria-label', `${definition.title}, ${index + 1}`);
       select.required = true;
@@ -141,6 +142,7 @@
         });
         syncBatch(card);
         card.dispatchEvent(new Event('change', { bubbles: true }));
+        globalThis.MilkVseSelects?.sync(card);
       }));
       syncBatch(card);
       container.append(card);

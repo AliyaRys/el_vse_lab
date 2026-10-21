@@ -1,8 +1,9 @@
 import './Icon.js';
 import './Button.js';
 import './InfoField.js';
-import './Toast.js';
+import './CompletedCheckStatus.js';
 import './app.css';
+import './evsd-check-values.css';
 
 export const app = globalThis.VseApp;
 export const wrapApp = (element, className = 'app-preview') => {

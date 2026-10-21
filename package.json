@@ -26,5 +26,8 @@
     "@storybook/html-vite": "^10.6.2",
     "axe-core": "^4.14.0",
     "storybook": "^10.6.2"
+  },
+  "dependencies": {
+    "choices.js": "11.1.0"
   }
 }

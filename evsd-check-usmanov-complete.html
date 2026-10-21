@@ -20,6 +20,9 @@
   <link rel="preload" as="image" href="vse-lab-icon-transparent.png" fetchpriority="high">
   <link rel="stylesheet" href="app-shell.css">
   <link rel="stylesheet" href="evsd-invoice.css">
+  <link rel="stylesheet" href="components/app/evsd-check-values.css">
+  <script src="components/app/CompletedCheckStatus.js"></script>
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
   <link rel="stylesheet" href="conclusion-print.css">
   <script src="conclusion-print.js" defer></script>
@@ -71,8 +74,8 @@
       <div class="check-card"><div class="field-name">Номер ТС</div><div class="mercury-value">А245КМ 116</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
       <div class="check-card"><div class="field-name">Номер прицепа</div><div class="mercury-value">Прицеп отсутствует</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
       <div class="check-card"><div class="field-name">Способ хранения продукции при перевозке</div><div class="mercury-value">Охлажденное</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-      <div class="check-card info-card"><div class="field-name">Состояние грузового отделения</div><div class="mercury-value">Не указано</div></div>
-      <div class="check-card info-card"><div class="field-name">Совместная перевозка с другими грузами</div><div class="mercury-value">Нет</div></div>
+      <div class="check-card info-card" data-completed-status="cargo"><div class="field-name">Состояние грузового отделения</div><div class="mercury-value">Не указано</div></div>
+      <div class="check-card info-card" data-completed-status="combined"><div class="field-name">Совместная перевозка с другими грузами</div><div class="mercury-value">Нет</div></div>
     </div></section>
     <section class="section"><div class="section-head"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/><path d="M5 3h14v18H5z"/></svg></span><h2>Сопроводительные документы</h2></div><div class="check-grid">
       <div class="check-card"><div class="field-name">ТТН</div><div class="mercury-value">№ ТТН-102 от 12.08.2026</div><span class="ok-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
@@ -146,6 +149,7 @@
       });
     }
     applyRefusalState();
+    globalThis.VseApp?.applyCompletedTransportStatuses(document);
     const openModal=id=>{const modal=document.getElementById(id);modal.classList.add('open');modal.setAttribute('aria-hidden','false')};
     const closeModal=id=>{const modal=document.getElementById(id);modal.classList.remove('open');modal.setAttribute('aria-hidden','true')};
     document.getElementById('send-max').addEventListener('click',()=>{document.getElementById('max-conclusion-link').href=document.getElementById('send-max').dataset.conclusionFile;openModal('max-modal')});

@@ -1,5 +1,5 @@
 /* Единый перечень исследований молока и молочной продукции.
-   Состав синхронизирован с directory-price-edit-milk.html. */
+   Состав синхронизирован с vse-view-milk.html и справочниками стоимости. */
 (() => {
   const source = 'https://eec.eaeunion.org/upload/medialibrary/789/TR-TS-033_2013.pdf';
   const n = (id, label, unit, min, max) => ({ id, label, unit, min, max, kind: 'number' });
@@ -16,24 +16,11 @@
     n('acidity', 'Кислотность', '°Т', 16, 21),
     n('somo', 'Сухой обезжиренный молочный остаток (СОМО)', '%', 8.2, null),
     n('somatic', 'Соматические клетки', 'тыс./см³', null, 750),
-    choice('brucellosis', 'Кольцевая реакция на бруцеллёз', 'Отрицательная', ['Отрицательная', 'Положительная'])
+    choice('brucellosis', 'Кольцевая реакция на бруцеллёз', 'Отрицательная', ['Отрицательная', 'Положительная']),
+    choice('antibiotics', 'Содержание потенциально опасных веществ (антибиотиков)', 'Не обнаружено', ['Не обнаружено', 'Обнаружено'])
   ];
 
-  const danger = [
-    n('chloramphenicol', 'Левомицетин (хлорамфеникол)', 'мг/кг (л)', null, .0003),
-    n('tetracyclines', 'Антибиотики тетрациклиновой группы', 'мг/кг (л)', null, .01),
-    n('streptomycin', 'Стрептомицин', 'мг/кг (л)', null, .2),
-    n('penicillin', 'Пенициллин', 'мг/кг (л)', null, .004),
-    n('lead', 'Свинец', 'мг/кг', null, .1),
-    n('arsenic', 'Мышьяк', 'мг/кг', null, .05),
-    n('cadmium', 'Кадмий', 'мг/кг', null, .03),
-    n('mercury', 'Ртуть', 'мг/кг', null, .005),
-    n('hch', 'ГХЦГ (альфа-, бета-, гамма-изомеры)', 'мг/кг', null, .05),
-    n('ddt', 'ДДТ и его метаболиты', 'мг/кг', null, .05),
-    n('aflatoxin-m1', 'Афлатоксин М1', 'мг/кг', null, .0005),
-    n('cesium-137', 'Цезий-137', 'Бк/кг', null, 100),
-    n('strontium-90', 'Стронций-90', 'Бк/кг', null, 25)
-  ];
+  const danger = [];
 
   const products = [
     ['Сырьё', 'raw-cow', 'Сырое молоко'],
@@ -47,7 +34,7 @@
     ['Сыры', 'cheese-hard', 'Твёрдый сыр'],
     ['Мороженое', 'ice-plombir', 'Пломбир']
   ];
-  const studies = [...base, ...danger];
+  const studies = [...base];
   const catalog = products.map(([group, slug, title]) => ({
     group,
     slug,

@@ -21,6 +21,7 @@
     if(selectedDirection&&directions.includes(selectedDirection))directionSelect.value=selectedDirection;
     else if(directions.length===1)directionSelect.value=directions[0];
     else directionSelect.value='';
+    globalThis.MilkVseSelects?.refresh(directionSelect);
   }
 
   function render(container,parts,options={}){
@@ -41,6 +42,7 @@
       resultLabel.innerHTML='Результат ВСЭ <span class="req">*</span>';
       const result=document.createElement('select');
       result.id='vse-result-'+(index+1);
+      result.dataset.librarySelect='';
       result.name='vseResult[]';
       result.required=true;
       result.append(createOption('Выберите решение',''),createOption('Пригодно'));
@@ -56,6 +58,7 @@
       directionLabel.innerHTML='Направление по результатам ВСЭ <span class="req">*</span>';
       const direction=document.createElement('select');
       direction.id='vse-direction-'+(index+1);
+      direction.dataset.librarySelect='';
       direction.name='vseDirection[]';
       direction.required=true;
       direction.disabled=true;
@@ -88,7 +91,7 @@
     });
     const message=container.parentElement?.querySelector('.vse-outcome-error');
     if(message)message.classList.toggle('visible',Boolean(firstInvalid));
-    if(firstInvalid)firstInvalid.focus();
+    if(firstInvalid)globalThis.MilkVseSelects?.focus(firstInvalid)||firstInvalid.focus();
     return !firstInvalid;
   }
 

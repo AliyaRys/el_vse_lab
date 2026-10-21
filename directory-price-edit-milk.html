@@ -22,8 +22,8 @@
   </style>
   <link rel="preload" as="image" href="vse-lab-icon-transparent.png" fetchpriority="high">
   <link rel="stylesheet" href="app-shell.css">
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
-  <script src="milk-directory-data.js" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -59,7 +59,7 @@
           <article class="research"><header><h3>Сухой обезжиренный молочный остаток (СОМО), %</h3></header><div class="price-field"><div class="price-control"><input id="price-milk-somo" aria-label="Стоимость: Сухой обезжиренный молочный остаток (СОМО), %, ₽" type="number" min="0" step="0.01" value="100" required><span>₽</span></div></div></article>
           <article class="research"><header><h3>Соматические клетки, тыс./см³</h3></header><div class="price-field"><div class="price-control"><input id="price-milk-somatic" aria-label="Стоимость: Соматические клетки, тыс./см³, ₽" type="number" min="0" step="0.01" value="100" required><span>₽</span></div></div></article>
           <article class="research"><header><h3>Кольцевая реакция на бруцеллёз</h3></header><div class="price-field"><div class="price-control"><input id="price-milk-brucellosis" aria-label="Стоимость: Кольцевая реакция на бруцеллёз, ₽" type="number" min="0" step="0.01" value="100" required><span>₽</span></div></div></article>
-          <div id="milk-danger-prices"></div>
+          <article class="research"><header><h3>Содержание потенциально опасных веществ (антибиотиков)</h3></header><div class="price-field"><div class="price-control"><input id="price-milk-antibiotics" aria-label="Стоимость: Содержание потенциально опасных веществ (антибиотиков), ₽" type="number" min="0" step="0.01" value="100" required><span>₽</span></div></div></article>
         </div>
       </section>
       <div class="actions"><a class="btn secondary" href="directories.html">Отменить</a><button class="btn primary" type="submit">Сохранить справочник</button></div>
@@ -67,7 +67,6 @@
   </main>
   <div class="toast" role="status" aria-live="polite" id="toast"></div>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>renderMilkDangerPrices(document.getElementById('milk-danger-prices'), 100, 'price-milk', true));
     const toast=document.getElementById('toast');function notice(message){toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2600)}
     document.getElementById('price-directory-form').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;window.location.href='directories.html'});
     

@@ -31,15 +31,7 @@
   const data = parties[party];
   const checkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
   const badIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
-  const icons = {
-    document: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/></svg>',
-    participants: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-7h6v7"/></svg>',
-    product: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"/></svg>',
-    transport: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16h13V6H3z"/><path d="M16 10h3l2 3v3h-5z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
-    documents: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/><path d="M5 3h14v18H5z"/></svg>',
-    vse: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>'
-  };
-  const sectionHead = (icon, title, description) => `<div class="section-head"><div class="section-title"><span class="section-icon">${icon}</span><div><h2>${title}</h2><p>${description}</p></div></div></div>`;
+  const sectionHead = (title, description) => `<div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>${title}</h2><p>${description}</p></div></div></div>`;
   const row = (key, label, value, placeholder = 'Укажите фактическое значение', type = 'text', classes = '') => `<div class="compare-row ${classes}" data-check="${key}"><div class="field-name">${label}</div><div class="mercury-value" title="${value}">${value}</div><button class="check-button ok" type="button" data-state="ok" aria-label="${label} соответствует" aria-pressed="false">${checkIcon}</button><button class="check-button bad" type="button" data-state="bad" aria-label="${label} не соответствует" aria-pressed="false">${badIcon}</button><div class="fact-field"><label for="fact-${key}">Фактическое значение</label><input id="fact-${key}" type="${type}" placeholder="${placeholder}"></div></div>`;
   const reference = (label, value, classes = '') => `<div class="compare-row reference ${classes}"><div class="field-name">${label}</div><div class="mercury-value" title="${value}">${value}</div></div>`;
   const quantityRow = () => `<div class="compare-row quantity-row" data-check="quantity" data-quantity-label="${data.quantity}">
@@ -67,8 +59,8 @@
       <div class="research-item optional"><div class="research-name">Антибиотики тетрациклиновой группы</div><div class="research-value">Не обнаружены</div></div>
     </div>
   </details>` : '';
-  const priorVseSection = party === 'ak-bars' ? `<section class="section">
-    ${sectionHead(icons.vse, 'Ранее проведённая ВСЭ', 'Сведения из мероприятий с партией продукции: номер экспертизы, дата, организация и результат осмотра.')}
+  const priorVseSection = party === 'ak-bars' ? `<section class="section" data-check-section="priorVse">
+    ${sectionHead('Ранее проведённая ВСЭ', 'Сведения из мероприятий с партией продукции: номер экспертизы, дата, организация и результат осмотра.')}
     <div class="compare-grid">
       ${reference('Номер экспертизы', data.vseNumber)}
       ${reference('Дата проведения', data.vseDate)}
@@ -80,8 +72,8 @@
 
   form.querySelectorAll(':scope > .section:not(.invoice-section)').forEach(section => section.remove());
   invoice.insertAdjacentHTML('beforebegin', `
-    <section class="section">
-      ${sectionHead(icons.document, 'Документ', 'Реквизиты транспортного эВСД и связанного контроля поставки.')}
+    <section class="section" data-check-section="document">
+      ${sectionHead('Документ', 'Реквизиты транспортного эВСД и связанного контроля поставки.')}
       <div class="compare-grid">
         ${reference('Номер эВСД', data.number, 'document-reference')}
         ${reference('Дата оформления', data.date, 'document-reference')}
@@ -89,8 +81,8 @@
         ${reference('Назначение груза', 'Для реализации на продовольственном рынке', 'document-reference')}
       </div>
     </section>
-    <section class="section">
-      ${sectionHead(icons.participants, 'Участники перевозки', 'Отправитель, получатель и площадки, указанные в эВСД.')}
+    <section class="section" data-check-section="participants">
+      ${sectionHead('Участники перевозки', 'Отправитель, получатель и площадки, указанные в эВСД.')}
       <div class="compare-grid">
         ${row('sender', 'Отправитель', data.owner, 'Кто фактически отправил')}
         ${row('sender-address', 'Адрес отправителя', data.senderAddress, 'Фактический адрес')}
@@ -98,8 +90,8 @@
         ${row('recipient-address', 'Адрес получателя', 'г. Казань, ул. Аграрная, д. 2', 'Фактический адрес получателя')}
       </div>
     </section>
-    <section class="section">
-      ${sectionHead(icons.product, 'Идентификация продукции по наименованию и визуальным осмотром', 'Продукция, номенклатура, объём и ветеринарные характеристики партии.')}
+    <section class="section" data-check-section="product">
+      ${sectionHead('Идентификация продукции по наименованию и визуальным осмотром', 'Продукция, номенклатура, объём и ветеринарные характеристики партии.')}
       <div class="compare-grid product-compare-grid">
         ${row('product', 'Вид продукции', 'Молоко коровье сырое', 'Фактическая продукция')}
         ${row('nomenclature', 'Номенклатура', data.nomenclature, 'Фактическая номенклатура')}
@@ -110,8 +102,8 @@
         ${row('expiry-date', 'Срок годности', data.expires, '', 'date')}
       </div>
     </section>
-    <section class="section">
-      ${sectionHead(icons.transport, 'Ветеринарно-санитарная оценка и идентификация транспорта', 'Сведения о перевозке и транспортном средстве.')}
+    <section class="section" data-check-section="transport">
+      ${sectionHead('Ветеринарно-санитарная оценка и идентификация транспорта', 'Сведения о перевозке и транспортном средстве.')}
       <div class="compare-grid">
         ${row('transport-type', 'Вид транспорта', 'Автомобильный', 'Фактический вид транспорта')}
         ${row('vehicle', 'Номер ТС', data.vehicle, 'Фактический номер ТС')}
@@ -123,12 +115,13 @@
         <div class="transport-observation"><label for="combined-cargo">Совместная перевозка с другими грузами</label><select id="combined-cargo" required><option value="" selected disabled hidden>Выберите значение</option><option>Нет</option><option>Да, грузы разделены</option><option>Да, разделение не обеспечено</option></select></div>
       </div>
     </section>
-    <section class="section">
-      ${sectionHead(icons.documents, 'Сопроводительные документы', 'Товарно-транспортная накладная и дополнительные документы партии.')}
+    <section class="section" data-check-section="documents">
+      ${sectionHead('Сопроводительные документы', 'Товарно-транспортная накладная и дополнительные документы партии.')}
       <div class="compare-grid">
         ${row('ttn', 'ТТН', data.ttn, 'Фактическая ТТН')}
         ${row('related-documents', 'Связанные документы', data.documents, 'Укажите фактические документы')}
       </div>
     </section>
     ${priorVseSection}`);
+  globalThis.VseCheck?.enhance(form);
 })();

@@ -8,7 +8,12 @@
   <link rel="stylesheet" href="milk-evsd-check.css">
   <link rel="stylesheet" href="app-shell.css">
   <link rel="stylesheet" href="evsd-invoice.css">
+  <link rel="stylesheet" href="components/app/evsd-check-values.css?v=20261018-1">
+  <link rel="stylesheet" href="components/checks/check-ui.css?v=20261019-1">
+  <script src="components/shell/AppHeader.js?v=20261020-1" defer></script>
   <script src="app-shell.js" defer></script>
+  <script src="components/icons/VseIcon.js?v=20261019-1" defer></script>
+  <script src="components/checks/CheckUi.js?v=20261019-1" defer></script>
   <script src="milk-evsd-check-canonical.js?v=20261016-2" defer></script>
   <script src="milk-evsd-check.js?v=20261016-2" defer></script>
 </head>
@@ -31,9 +36,9 @@
   </header>
   <main>
     <div class="title-row"><div><h1>Сверка данных транспортного эВСД</h1></div><span class="mercury-badge"><img src="mercury-logo.webp" alt="">Меркурий</span></div>
-    <form id="milk-check-form" novalidate>
-      <section class="section">
-        <div class="section-head"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/></svg></span><div><h2>Документ</h2><p>Реквизиты поступившего эВСД.</p></div></div>
+    <form id="milk-check-form" class="vse-check-ui" novalidate>
+      <section class="section" data-check-section="document">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Документ</h2><p>Реквизиты поступившего эВСД.</p></div></div></div>
         <div class="compare-grid"><div class="compare-row reference"><div class="field-name">Номер эВСД</div><div class="mercury-value">RU016:260812-007101</div></div>
           <div class="compare-row" data-check="date">
       <div class="field-name">Дата создания ВСД</div><div class="mercury-value" title="12.08.2026 08:40">12.08.2026 08:40</div>
@@ -42,8 +47,8 @@
       <div class="fact-field"><label for="fact-date">Фактическое значение</label><input id="fact-date" placeholder="Укажите значение"></div>
     </div></div>
       </section>
-      <section class="section">
-        <div class="section-head"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.2 12 4l7.5 4.2-7.5 4.2-7.5-4.2Z"/><path d="M4.5 8.2v7.9L12 20l7.5-3.9V8.2"/></svg></span><div><h2>Идентификация продукции по наименованию и визуальным осмотром</h2><p>Состав и общий объём партии.</p></div></div>
+      <section class="section" data-check-section="product">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Идентификация продукции по наименованию и визуальным осмотром</h2><p>Состав и общий объём партии.</p></div></div></div>
         <div class="compare-grid">
           <div class="compare-row" data-check="owner">
       <div class="field-name">Хозяйство</div><div class="mercury-value" title="КФХ «Ак Барс»">КФХ «Ак Барс»</div>
@@ -71,8 +76,8 @@
     </div>
         </div>
       </section>
-      <section class="section">
-        <div class="section-head"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16h13V6H3z"/><path d="M16 10h3l2 3v3h-5z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><div><h2>Ветеринарно-санитарная оценка и идентификация транспорта</h2><p>Транспортное средство и фактическое состояние перевозки.</p></div></div>
+      <section class="section" data-check-section="transport">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2>Ветеринарно-санитарная оценка и идентификация транспорта</h2><p>Транспортное средство и фактическое состояние перевозки.</p></div></div></div>
         <div class="compare-grid"><div class="compare-row" data-check="vehicle">
       <div class="field-name">Номер ТС</div><div class="mercury-value" title="А245КМ 116">А245КМ 116</div>
       <button class="check-button ok" type="button" data-state="ok" aria-label="Номер ТС соответствует" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></button>
@@ -84,8 +89,8 @@
           <div class="transport-observation"><label for="combined-cargo">Совместная перевозка с другими грузами</label><select id="combined-cargo" required><option value="" selected disabled hidden>Выберите значение</option><option>Нет</option><option>Да, грузы разделены</option><option>Да, разделение не обеспечено</option></select></div>
         </div>
       </section>
-      <section class="section invoice-section" aria-labelledby="invoice-title">
-        <div class="section-head"><div class="section-title"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-3-2-4 2-4-2-3 2V3Z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><h2 id="invoice-title">Расчёт стоимости услуг</h2><p>Услуги по сверке партии и транспорта, их количество, тарифы и итоговая сумма.</p></div></div></div>
+      <section class="section invoice-section" data-check-section="invoice" aria-labelledby="invoice-title">
+        <div class="section-head"><div class="section-title"><span class="section-icon"></span><div><h2 id="invoice-title">Расчёт стоимости услуг</h2><p>Услуги по сверке партии и транспорта, их количество, тарифы и итоговая сумма.</p></div></div></div>
         <div class="invoice-table-wrap"><table class="invoice-table">
           <thead><tr><th scope="col">Услуга</th><th scope="col">Количество</th><th scope="col">Тариф</th><th scope="col">Сумма</th></tr></thead>
           <tbody><tr><td>Идентификация продукции по наименованию и визуальным осмотром</td><td>3 секции</td><td>94 ₽</td><td>282 ₽</td></tr>
@@ -94,7 +99,7 @@
         <div class="invoice-total"><span>Итого к оплате</span><strong>376 ₽</strong></div>
       </section>
       <p class="form-error" id="check-error" role="alert" aria-live="assertive"></p>
-      <div class="actions"><a class="btn" href="arrivals-milk.html">Отмена</a><button class="btn success" id="mark-all-ok" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 12.5 3.5 3.5 7-8"/><path d="m10.5 12.5 3.5 3.5 7-8"/></svg>Все соответствует</button><button class="btn primary" type="submit">Завершить</button></div>
+      <div class="actions"><a class="btn" href="arrivals-milk.html">Отмена</a><button class="btn success" id="mark-all-ok" type="button" data-check-complete-icon>Все соответствует</button><button class="btn primary" type="submit">Завершить</button></div>
     </form>
   </main>
   <dialog class="check-dialog" id="check-confirmation" aria-labelledby="confirmation-title">

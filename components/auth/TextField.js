@@ -52,4 +52,19 @@
     input.addEventListener('input', () => field.setError(''));
     return field;
   };
+
+  /** Демонстрационная политика пароля. Утверждённые требования определяет бэкенд. */
+  ui.demoPasswordPolicy = Object.freeze({
+    minLength: 10,
+    needsLetter: /[а-яёa-z]/i,
+    needsDigit: /\d/,
+    description: 'Демонстрационное требование: не менее 10 символов, есть буквы и цифры.',
+    describe: value => {
+      if (!value) return 'Укажите пароль.';
+      if (value.length < ui.demoPasswordPolicy.minLength) return 'Пароль короче 10 символов.';
+      if (!ui.demoPasswordPolicy.needsLetter.test(value)) return 'Добавьте в пароль буквы.';
+      if (!ui.demoPasswordPolicy.needsDigit.test(value)) return 'Добавьте в пароль цифры.';
+      return '';
+    },
+  });
 })();

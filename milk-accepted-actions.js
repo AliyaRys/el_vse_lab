@@ -25,19 +25,6 @@
     }
   });
 
-  document.querySelectorAll('.inspection-view').forEach(button => button.addEventListener('click', event => {
-    event.preventDefault();
-    const card = button.closest('.accepted-row');
-    button.closest('.inspection-menu').open = false;
-    const item = card?.querySelector('.inspection-item');
-    if (item) {
-      item.closest('details')?.setAttribute('open', '');
-      item.click();
-    } else {
-      notify('Повторные ветосмотры пока не добавлены');
-    }
-  }));
-
   const printImage = document.getElementById('print-image');
   let printing = false;
   document.querySelectorAll('.conclusion-print').forEach(link => link.addEventListener('click', event => {
@@ -100,40 +87,60 @@
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
   dialog.addEventListener('close', () => maxTrigger?.closest('.conclusion-menu').querySelector('summary').focus());
 
-  let inspections = [];
+  const demoInspections = [
+    { party:'204', date:'2026-08-14T10:20', decision:'Пригодно', author:'Анна Кузнецова', remaining:'120', unit:'л', cost:'300', comment:'Условия хранения соблюдены, показатели партии соответствуют требованиям.' },
+    { party:'204', date:'2026-08-17T09:15', decision:'Пригодно', author:'Ильдар Сафин', remaining:'86', unit:'л', cost:'300', comment:'Условия хранения соблюдены, показатели партии соответствуют требованиям.' },
+    { party:'882', date:'2026-08-14T11:30', decision:'Пригодно', author:'Анна Кузнецова', remaining:'438,0', unit:'кг', cost:'400', comment:'Условия хранения соблюдены, показатели партии соответствуют требованиям.' },
+    { party:'882', date:'2026-08-18T08:45', decision:'Пригодно', author:'Ильдар Сафин', remaining:'312,6', unit:'кг', cost:'400', comment:'Условия хранения соблюдены, показатели партии соответствуют требованиям.' }
+  ];
+  let inspections = [...demoInspections];
   try {
     const stored = JSON.parse(localStorage.getItem('vse-milk-repeat-inspections') || '[]');
-    if (Array.isArray(stored)) inspections = stored.filter(item => item && ['party','date','decision','author','remaining'].every(key => typeof item[key] === 'string'));
+    if (Array.isArray(stored)) inspections.push(...stored.filter(item => item && ['party','date','decision','author','remaining'].every(key => typeof item[key] === 'string')));
   } catch { /* No saved inspections in this mockup session. */ }
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const displayDate = value => value ? `${value.slice(8,10)}.${value.slice(5,7)}.${value.slice(0,4)} ${value.slice(11,16)}` : '—';
   const inspectionDialog = document.getElementById('milk-inspection-summary');
+  const inspectionFields = document.getElementById('milk-inspection-fields');
+  const inspectionDetailPages = {
+    '204': 'additional-vet-inspection-view-milk-204.html',
+    '882': 'additional-vet-inspection-view-882.html'
+  };
+  const inspectionComment = 'Условия хранения соблюдены, показатели партии соответствуют требованиям.';
   let inspectionTrigger;
-  document.querySelectorAll('.accepted-row').forEach(card => {
-    const items = inspections.filter(item => String(item.party) === card.dataset.vseNumber);
-    if (!items.length) return;
-    const line = document.createElement('div');
-    line.className = 'inspection-line has-history';
-    line.innerHTML = `<details><summary><span>Повторные ветосмотры (${items.length})</span><svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary><div class="inspection-list"></div></details>`;
-    items.forEach(item => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'inspection-item';
-      button.setAttribute('aria-label', 'Открыть повторный ветосмотр от ' + displayDate(item.date));
-      button.innerHTML = `<span>${escape(displayDate(item.date))}</span><strong>${escape(item.decision)}</strong><span>${escape(item.author)} · остаток ${escape(item.remaining)} ${escape(item.unit)}</span><em>${escape(item.cost)} ₽</em>`;
-      button.addEventListener('click', () => {
-        inspectionTrigger = button;
-        const fields = [['Дата осмотра', displayDate(item.date)], ['Хозяйство', card.dataset.owner], ['Продукция', card.dataset.product], ['Номер ВСД', card.dataset.number], ['Специалист', item.author], ['Остаток партии', `${item.remaining} ${item.unit}`], ['Результат осмотра', item.decision], ['Стоимость', item.cost + ' ₽']];
-        if (item.comment) fields.push(['Комментарий', item.comment]);
-        if (item.address) fields.push(['Адрес предприятия', item.address]);
-        if (item.storage) fields.push(['Условия хранения', item.storage]);
-        (Array.isArray(item.tests) ? item.tests : []).forEach(test => fields.push([test.name, test.value]));
-        document.getElementById('milk-inspection-fields').innerHTML = fields.map(([label,value]) => `<div><dt>${escape(label)}</dt><dd>${escape(value)}</dd></div>`).join('');
-        inspectionDialog.showModal();
-      });
-      line.querySelector('.inspection-list').append(button);
-    });
-    card.querySelector('.accepted-actions-cell').append(line);
+  document.addEventListener('click', event => {
+    const button = event.target.closest('.inspection-view');
+    if (!button) return;
+    event.preventDefault();
+    inspectionTrigger = button;
+    const card = button.closest('.accepted-row');
+    button.closest('.inspection-menu').open = false;
+    const items = inspections
+      .filter(item => String(item.party) === card?.dataset.vseNumber)
+      .sort((a,b) => a.date.localeCompare(b.date));
+    if (!items.length) {
+      notify('Повторные ветосмотры пока не добавлены');
+      return;
+    }
+    inspectionFields.innerHTML = items.map((item,index) => {
+      const detailHref = index === 0 ? inspectionDetailPages[String(item.party)] : '';
+      const openTag = detailHref
+        ? `<a class="inspection-history-card is-link" href="${detailHref}" aria-label="Открыть карточку ветосмотра ${index + 1}">`
+        : '<article class="inspection-history-card">';
+      const closeTag = detailHref ? '</a>' : '</article>';
+      return `
+      ${openTag}
+        <div class="inspection-history-head"><div class="inspection-history-title"><span>Ветосмотр ${index + 1}</span>${detailHref ? '<span class="inspection-history-open" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg></span>' : ''}</div><time datetime="${escape(item.date)}">${escape(displayDate(item.date))}</time></div>
+        <dl>
+          <div><dt>Специалист</dt><dd>${escape(item.author)}</dd></div>
+          <div><dt>Результат осмотра</dt><dd>${escape(item.decision)}</dd></div>
+          <div><dt>Остаток партии</dt><dd>${escape(item.remaining)} ${escape(item.unit)}</dd></div>
+          <div><dt>Стоимость</dt><dd>${escape(item.cost)} ₽</dd></div>
+          <div class="wide"><dt>Комментарий</dt><dd>${escape(inspectionComment)}</dd></div>
+        </dl>
+      ${closeTag}`;
+    }).join('');
+    inspectionDialog.showModal();
   });
   inspectionDialog.querySelectorAll('[data-close-inspection]').forEach(button => button.addEventListener('click', () => inspectionDialog.close()));
   inspectionDialog.addEventListener('click', event => { if (event.target === inspectionDialog) inspectionDialog.close(); });

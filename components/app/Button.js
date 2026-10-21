@@ -3,7 +3,7 @@
 
   /** Canonical button for working screens; authentication keeps its own larger variant. */
   ui.createButton = ({ label = 'Продолжить', busyLabel = 'Выполняется…', variant = 'secondary', type = 'button', icon, iconOnly = false, disabled = false, busy = false, onClick } = {}) => {
-    if (!['primary', 'secondary'].includes(variant)) throw new TypeError('Неподдерживаемый вариант кнопки');
+    if (!['primary', 'secondary', 'danger'].includes(variant)) throw new TypeError('Неподдерживаемый вариант кнопки');
     const button = document.createElement('button');
     button.className = `vse-app app-button ${variant}${iconOnly ? ' icon-only' : ''}`;
     button.type = type;

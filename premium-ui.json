@@ -4,7 +4,7 @@
   "sourceRoots": ["components/auth", "components/app", "components/profile"],
   "locale": "ru-RU",
   "canonicalMap": "UX-CONTRACT.md",
-  "requiredCapabilities": ["Form", "Toast"],
+  "requiredCapabilities": ["Form"],
   "requiredCommands": ["build", "e2e"],
   "commands": {
     "build": "npm.cmd run build-storybook",
