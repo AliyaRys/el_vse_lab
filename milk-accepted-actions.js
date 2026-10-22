@@ -50,43 +50,6 @@
     notify('Скачивание заключения начато');
   }));
 
-  const dialog = document.getElementById('milk-max');
-  const phone = document.getElementById('max-phone');
-  const submit = document.getElementById('max-submit');
-  const result = document.getElementById('max-result');
-  let maxTrigger, documentName;
-  const validPhone = () => /^[78]\d{10}$/.test(phone.value.replace(/\D/g, ''));
-  document.querySelectorAll('.conclusion-max').forEach(link => link.addEventListener('click', event => {
-    event.preventDefault();
-    maxTrigger = link;
-    link.closest('.conclusion-menu').open = false;
-    const data = link.closest('.accepted-row').dataset;
-    documentName = `Заключение № ${data.vseNumber} · ${data.product}`;
-    document.getElementById('max-document-name').textContent = documentName;
-    document.getElementById('max-conclusion-file').href = link.dataset.conclusionFile;
-    document.getElementById('max-recipient').textContent = 'Владелец: ' + data.owner;
-    phone.value = '';
-    submit.disabled = true;
-    result.textContent = '';
-    result.classList.remove('visible');
-    dialog.showModal();
-    phone.focus();
-  }));
-  phone.addEventListener('input', () => {
-    submit.disabled = !validPhone();
-    result.classList.remove('visible');
-  });
-  document.getElementById('max-form').addEventListener('submit', event => {
-    event.preventDefault();
-    if (!validPhone() || submit.disabled) return;
-    result.textContent = `Демонстрационная отправка: ${documentName}, телефон ${phone.value.trim()}`;
-    result.classList.add('visible');
-    submit.disabled = true;
-  });
-  dialog.querySelectorAll('[data-close-max]').forEach(button => button.addEventListener('click', () => dialog.close()));
-  dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-  dialog.addEventListener('close', () => maxTrigger?.closest('.conclusion-menu').querySelector('summary').focus());
-
   const demoInspections = [
     { party:'204', date:'2026-08-14T10:20', decision:'Пригодно', author:'Анна Кузнецова', remaining:'120', unit:'л', cost:'300', comment:'Условия хранения соблюдены, показатели партии соответствуют требованиям.' },
     { party:'204', date:'2026-08-17T09:15', decision:'Пригодно', author:'Ильдар Сафин', remaining:'86', unit:'л', cost:'300', comment:'Условия хранения соблюдены, показатели партии соответствуют требованиям.' },
